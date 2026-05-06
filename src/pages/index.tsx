@@ -2,9 +2,9 @@ import React from 'react';
 import Head from 'next/head';
 import { Layout } from '@/components/layout/Layout';
 import { ArticleCard } from '@/components/features/ArticleCard';
-import { Filter } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { Article } from '@/data/mock';
+import Link from 'next/link';
 
 interface HomeProps {
   articles: Article[];
@@ -16,25 +16,32 @@ export default function Home({ articles }: HomeProps) {
       <Head>
         <title>Qiita clone - freelyTech版</title>
       </Head>
+
+      {/* Conference Banner */}
+      <div className="mb-4 rounded-lg overflow-hidden border border-gray-200">
+        <Link href="#">
+          <img src="/images/conference_banner.png" alt="Qiita Conference 2026" className="w-full" />
+        </Link>
+        <div className="bg-white px-4 py-2 text-xs text-gray-500 border-t border-gray-200">
+          ⏳ Time to end <span className="font-bold text-gray-900">25 days</span>
+        </div>
+      </div>
+
+      {/* Article Feed */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         {/* Tabs */}
-        <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3 bg-white">
-          <div className="flex items-center gap-6">
-            <button className="flex items-center gap-2 text-sm font-bold text-gray-900 border-b-2 border-[#55c500] pb-3 -mb-3">
-              <svg className="w-5 h-5 text-[#55c500]" fill="currentColor" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
-              トレンド
-            </button>
-            <button className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 pb-3 -mb-3">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              タイムライン
+        <div className="flex items-center justify-between border-b border-gray-200 px-4 py-2.5 bg-white">
+          <div className="flex items-center gap-1">
+            <button className="flex items-center gap-1.5 text-sm font-bold text-gray-900 bg-gray-100 px-3 py-1.5 rounded-full">
+              ≡ All
             </button>
           </div>
-          <button className="text-gray-400 hover:text-gray-600 transition-colors">
-            <Filter className="w-5 h-5" />
-          </button>
+          <span className="text-xs text-gray-400">
+            Remarkable items. Refreshed at every 5 a.m. and 5 p.m. 🔄
+          </span>
         </div>
 
-        {/* Article Feed */}
+        {/* Articles */}
         <div className="flex flex-col">
           {articles && articles.length > 0 ? (
             articles.map((article) => (
