@@ -119,17 +119,19 @@ export async function getServerSideProps(context: any) {
     return { props: { article: null } };
   }
 
+  const articleData: any = data;
+
   const article: Article = {
-    id: data.id,
-    title: data.title,
-    lgtmCount: data.lgtm_count || 0,
-    createdAt: data.created_at,
-    author: data.profiles ? {
-      name: data.profiles.name,
-      username: data.profiles.username,
-      iconUrl: data.profiles.icon_url,
+    id: articleData.id,
+    title: articleData.title,
+    lgtmCount: articleData.lgtm_count || 0,
+    createdAt: articleData.created_at,
+    author: articleData.profiles ? {
+      name: Array.isArray(articleData.profiles) ? articleData.profiles[0]?.name : articleData.profiles.name,
+      username: Array.isArray(articleData.profiles) ? articleData.profiles[0]?.username : articleData.profiles.username,
+      iconUrl: Array.isArray(articleData.profiles) ? articleData.profiles[0]?.icon_url : articleData.profiles.icon_url,
     } : { name: 'Unknown', username: 'unknown', iconUrl: '' },
-    tags: data.article_tags ? data.article_tags.map((at: any) => at.tags?.name).filter(Boolean) : [],
+    tags: articleData.article_tags ? articleData.article_tags.map((at: any) => at.tags?.name).filter(Boolean) : [],
   };
 
   return {

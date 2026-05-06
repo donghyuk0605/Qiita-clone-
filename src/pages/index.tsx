@@ -75,9 +75,9 @@ export async function getServerSideProps() {
       lgtmCount: item.lgtm_count || 0,
       createdAt: item.created_at,
       author: item.profiles ? {
-        name: item.profiles.name,
-        username: item.profiles.username,
-        iconUrl: item.profiles.icon_url,
+        name: Array.isArray(item.profiles) ? item.profiles[0]?.name : item.profiles.name,
+        username: Array.isArray(item.profiles) ? item.profiles[0]?.username : item.profiles.username,
+        iconUrl: Array.isArray(item.profiles) ? item.profiles[0]?.icon_url : item.profiles.icon_url,
       } : { name: 'Unknown', username: 'unknown', iconUrl: '' },
       tags: item.article_tags ? item.article_tags.map((at: any) => at.tags?.name).filter(Boolean) : [],
     }));
